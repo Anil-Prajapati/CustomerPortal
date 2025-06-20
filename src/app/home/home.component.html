@@ -1,188 +1,56 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #0d5fa6">
+<!-- Home Component HTML -->
+<div class="main-content">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">MyApp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-
-<!-- This is the Side bar code is there -->
-<div class="d-flex">
-  <div #sidebar class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white" style="background-color: #0d5fa6">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none logo-wrapper">
-      <img src="/assets/images/logo.jpg" alt="Admin Panel Full Logo" class="logo-full-on-hover" />
-      <img src="/assets/images/png.png" alt="Admin Panel Icon Logo" class="logo-icon-default" />
-    </a>
-    <hr />
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a routerLink="/home" class="nav-link active text-white d-flex align-items-center" aria-current="page">
-          <i class="bi bi-house-door-fill me-2 text-white"></i>
-          <span class="sidebar-text">Home</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/home/Consignment-Report" class="nav-link text-white d-flex align-items-center">
-          <i class="bi bi-box-seam me-2 text-white"></i>
-          <span class="sidebar-text">Consignment Report</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/home/Billing-Report" class="nav-link text-white d-flex align-items-center">
-          <i class="bi bi-receipt me-2 text-white"></i>
-          <span class="sidebar-text">Billing Report</span>
-        </a>
-      </li>
-      <li>
-        <a router="/home/Track-Shipment-branch" class="nav-link text-white d-flex align-items-center">
-          <i class="bi bi-geo-alt-fill me-2 text-white"></i>
-          <span class="sidebar-text">Track Shipment or Branch</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/home/Pickup-Request" class="nav-link text-white d-flex align-items-center">
-          <i class="bi bi-box-arrow-in-up me-2 text-white"></i>
-          <span class="sidebar-text">Pickup Request</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/home/" class="nav-link text-white d-flex align-items-center">
-          <i class="bi bi-download me-2 text-white"></i>
-          <span class="sidebar-text">Download POD</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card shadow h-100">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center" style="color: #494950">
-                Today's Shipment
-              </h5>
-              <p class="card-text text-center fw-bold fs-3 text-primary mt-auto mb-0">
-                1,238
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card shadow h-100">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center" style="color: #494950">
-                Yesterday's Shipment
-              </h5>
-              <p class="card-text text-center fw-bold fs-3 text-primary mt-auto mb-0">
-                1,228
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card shadow h-100">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center" style="color: #494950">
-                Pending POD's
-              </h5>
-              <p class="card-text text-center fw-bold fs-3 text-primary mt-auto mb-0">
-                112
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card shadow h-100">
-            <div class="card-body d-flex flex-column">
-              <h5 class="card-title text-center" style="color: #494950">
-                Pickup Request
-              </h5>
-              <p class="card-text text-center fw-bold fs-3 text-primary mt-auto mb-0">
-                89
-              </p>
-            </div>
+    <div class="row">
+      <!-- Card 1 -->
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let card of dashboardCards">
+        <div class="card shadow h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-center text-dark">
+              {{ card.title }}
+            </h5>
+            <p class="card-text text-center fw-bold fs-3 text-primary mt-auto mb-0">
+              {{ card.value }}
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-6">
-          <div style="display: block; width: 100%; height: 400px">
-            <div *ngIf="isBrowser" style="display: block; width: 100%; height: 400px">
-              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"
-                [legend]="true"></canvas>
+
+    <div class="row">
+      <!-- Chart Section -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow h-100">
+          <div class="card-body">
+            <h5 class="card-title text-center mb-3 text-dark">Shipment Overview</h5>
+            <div *ngIf="isBrowser" style="width: 100%; height: 350px">
+              <canvas baseChart
+                      [data]="lineChartData"
+                      [options]="lineChartOptions"
+                      [type]="lineChartType"
+                      [legend]="true">
+              </canvas>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="card shadow" style="display: block; width: 100%; height: 350px">
-            <div class="card-header bg-white">
-              <h5 class="text-center fw-bold fs-3" style="color: #494950">Recent Shipments:</h5>
-            </div>
-            <div class="card-body text-center fw-bold fs-3">
-              <ul class="list-unstyled">
-                <li class="mb-2">
-                  <i class="bi bi-check-square-fill text-success"></i>
-                  <span class="ms-2 fw-bold">DWB-01234</span>
-                  <span class="ms-2 text-muted">delivered to Chennai</span>
-                </li>
+      </div>
 
-                <li class="mb-2">
-                  <i class="bi bi-truck text-info"></i>
-                  <span class="ms-2 fw-bold">DWB-04567</span>
-                  <span class="ms-2 text-muted">in transit to Mumbai</span>
-                </li>
-
-                <li class="mb-2">
-                  <i class="bi bi-x-square-fill text-danger"></i>
-                  <span class="ms-2 fw-bold">DWB-09887</span>
-                  <span class="ms-2 text-danger">in failed delivery</span>
-                </li>
-
-                <li class="mb-2">
-                  <i class="bi bi-check-square-fill text-success"></i>
-                  <span class="ms-2 fw-bold">DWB-06543</span>
-                  <span class="ms-2 text-muted">delivered to Delhi</span>
-                </li>
-              </ul>
-            </div>
+      <!-- Recent Shipments -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow h-100">
+          <div class="card-header bg-white">
+            <h5 class="text-center fw-bold fs-5 text-dark">Recent Shipments</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled">
+              <li *ngFor="let shipment of recentShipments" class="mb-3 d-flex align-items-start">
+                <i [ngClass]="shipment.icon" [class]="shipment.color + ' me-2 fs-5'"></i>
+                <div>
+                  <div class="fw-bold">{{ shipment.dwb }}</div>
+                  <div class="text-muted small">{{ shipment.status }}</div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

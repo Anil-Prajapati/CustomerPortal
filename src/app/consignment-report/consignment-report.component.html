@@ -1,1 +1,149 @@
-<p>consignment-report works!</p>
+<div class="container-fluid py-4">
+  <div class="card shadow-lg mb-4 border-info">
+    <div class="card-header bg-white text-dark text-center py-2">
+      <h5 class="mb-0 fw-bold border-2">Consignment Report</h5>
+    </div>
+    <div class="card-body bg-light-blue-gradient">
+      <form [formGroup]="consignmentReportForm" (ngSubmit)="fetchConsignmentReport()">
+        <div class="row g-3 align-items-center justify-content-center mb-3">
+          <div class="col-md-auto">
+            <label for="fromDate" class="form-label mb-0 me-2">From Date :</label>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control form-control-sm" id="fromDate" formControlName="fromDate"
+                   [class.is-invalid]="consignmentReportForm.get('fromDate')?.invalid && consignmentReportForm.get('fromDate')?.touched">
+            <div *ngIf="consignmentReportForm.get('fromDate')?.invalid && consignmentReportForm.get('fromDate')?.touched" class="invalid-feedback">
+              From Date is required.
+            </div>
+          </div>
+
+          <div class="col-md-auto">
+            <label for="toDate" class="form-label mb-0 me-2">To Date :</label>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control form-control-sm" id="toDate" formControlName="toDate"
+                   [class.is-invalid]="consignmentReportForm.get('toDate')?.invalid && consignmentReportForm.get('toDate')?.touched">
+            <div *ngIf="consignmentReportForm.get('toDate')?.invalid && consignmentReportForm.get('toDate')?.touched" class="invalid-feedback">
+              To Date is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-center justify-content-center mb-4">
+          <div class="col-md-auto">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioBooking" value="Booking" formControlName="reportType">
+              <label class="form-check-label" for="radioBooking">Booking</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioDelivered" value="Delivered" formControlName="reportType">
+              <label class="form-check-label" for="radioDelivered">Delivered</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioUndelivered" value="Undelivered" formControlName="reportType">
+              <label class="form-check-label" for="radioUndelivered">Undelivered</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioRTO" value="RTO" formControlName="reportType">
+              <label class="form-check-label" for="radioRTO">RTO</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="radioSummary" value="Summary" formControlName="reportType">
+              <label class="form-check-label" for="radioSummary">Summary</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button type="submit" class="btn btn-primary btn-sm px-4">View</button>
+          <button type="button" class="btn btn-secondary btn-sm px-4" (click)="clearForm()">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-primary mt-4">
+    <div class="card-body">
+      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead class="table-dark sticky-top">
+            <tr>
+              <th scope="col">Branch</th>
+              <th scope="col" class="text-end">Paid No</th>
+              <th scope="col" class="text-end">Paid Amt</th>
+              <th scope="col" class="text-end">Tbb No</th>
+              <th scope="col" class="text-end">Tbb Amt</th>
+              <th scope="col" class="text-end">Fod No</th>
+              <th scope="col" class="text-end">Fod Amt</th>
+              <th scope="col" class="text-end">Bod No</th>
+              <th scope="col" class="text-end">Bod Amt</th>
+              <th scope="col" class="text-end">Cod No</th>
+              <th scope="col" class="text-end">Cod Amt</th>
+              <th scope="col" class="text-end">Tot Wt</th>
+              <th scope="col" class="text-end">Tot No</th>
+              <th scope="col" class="text-end">Tot Amt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="paginatedReportData.length === 0">
+              <td colspan="14" class="text-center text-muted py-3">No Consignment Report data to display. Please use the form above to search.</td>
+            </tr>
+            <tr *ngFor="let item of paginatedReportData">
+              <td>{{ item.branch }}</td>
+              <td class="text-end">{{ item.paidNo }}</td>
+              <td class="text-end">{{ item.paidAmt | number:'1.2-2' }}</td>
+              <td class="text-end">{{ item.tbbNo }}</td>
+              <td class="text-end">{{ item.tbbAmt | number:'1.2-2' }}</td>
+              <td class="text-end">{{ item.fodNo }}</td>
+              <td class="text-end">{{ item.fodAmt | number:'1.2-2' }}</td>
+              <td class="text-end">{{ item.bodNo }}</td>
+              <td class="text-end">{{ item.bodAmt | number:'1.2-2' }}</td>
+              <td class="text-end">{{ item.codNo }}</td>
+              <td class="text-end">{{ item.codAmt | number:'1.2-2' }}</td>
+              <td class="text-end">{{ item.totWt | number:'1.0-0' }}</td>
+              <td class="text-end">{{ item.totNo }}</td>
+              <td class="text-end">{{ item.totAmt | number:'1.2-2' }}</td>
+            </tr>
+            <tr class="table-info fw-bold" *ngIf="paginatedReportData.length > 0 && currentPage === totalPages">
+              <td>Total Details</td>
+              <td class="text-end">0</td>
+              <td class="text-end">0</td>
+              <td class="text-end">460</td>
+              <td class="text-end">2871707.96</td>
+              <td class="text-end">0</td>
+              <td class="text-end">0</td>
+              <td class="text-end">39</td>
+              <td class="text-end">588181.91</td>
+              <td class="text-end">0</td>
+              <td class="text-end">0</td>
+              <td class="text-end">70707</td>
+              <td class="text-end">474</td>
+              <td class="text-end">3128712</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="mt-3">
+        <ul class="pagination pagination-sm justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="prevPage()">Previous</a>
+          </li>
+          <li class="page-item" *ngFor="let page of pageNumbers" [class.active]="page === currentPage">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <div *ngIf="totalPages > 0" class="text-center text-muted small">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+
+      <div class="text-center mt-3">
+        <button type="button" class="btn btn-success btn-sm px-4" (click)="exportToExcel()">Export Excel</button>
+      </div>
+    </div>
+  </div>
+</div>

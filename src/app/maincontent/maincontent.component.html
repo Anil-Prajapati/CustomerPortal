@@ -1,1 +1,58 @@
-<p>maincontent works!</p>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #0d5fa6">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MyApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link active" routerLink="/home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" />
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT: SIDEBAR + ROUTER OUTLET -->
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white">
+    <!-- Logo -->
+    <a href="/" class="d-flex align-items-center mb-3 text-white text-decoration-none logo-wrapper">
+      <img src="/assets/images/logo.jpg" alt="Full Logo" class="logo-full-on-hover" />
+      <img src="/assets/images/png.png" alt="Icon Logo" class="logo-icon-default" />
+    </a>
+    <hr />
+    <!-- Navigation -->
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li><a routerLink="/home" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-house-door-fill me-2"></i><span class="sidebar-text">Home</span></a></li>
+      <li><a routerLink="/Consignment-Report" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-box-seam me-2"></i><span class="sidebar-text">Consignment Report</span></a></li>
+      <li><a routerLink="/Billing-Report" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-receipt me-2"></i><span class="sidebar-text">Billing Report</span></a></li>
+      <li><a routerLink="/Track-Shipment-branch" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-geo-alt-fill me-2"></i><span class="sidebar-text">Track Shipment</span></a></li>
+      <li><a routerLink="/Pickup-Request" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-box-arrow-in-up me-2"></i><span class="sidebar-text">Pickup Request</span></a></li>
+      <li><a routerLink="/Download-POD" routerLinkActive="active" class="nav-link text-white d-flex align-items-center"><i class="bi bi-download me-2"></i><span class="sidebar-text">Download POD</span></a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

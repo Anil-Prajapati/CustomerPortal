@@ -1,0 +1,57 @@
+/* Custom CSS for DownloadPodComponent */
+
+.py-4 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+
+.bg-light-blue-gradient {
+    background: linear-gradient(to right, #e0f2f7, #c1e7f0);
+    /* Light blue gradient */
+}
+
+.card.border-info {
+    border-color: #0d6efd !important;
+
+    .card.border-primary {
+        border-color: #0d6efd !important;
+    }
+
+    .card-header.bg-primary {
+        background-color: #0d6efd !important;
+    }
+
+    .form-label.mb-0.me-2 {
+        white-space: nowrap;
+    }
+
+    .form-control-sm,
+    .form-select-sm {
+        height: calc(1.5em + 0.5rem + 2px);
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .table-responsive {
+        max-height: 500px;
+        /* Adjust as needed for your layout */
+        overflow-y: auto;
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background-color: inherit;
+        /* Ensure background color sticks */
+        z-index: 10;
+    }
+
+    .invalid-feedback {
+        display: block;
+    }
+}

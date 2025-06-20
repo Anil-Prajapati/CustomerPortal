@@ -1,1 +1,140 @@
-<p>billing-report works!</p>
+<div class="container-fluid report-container">
+  <div class="card shadow-sm mb-4 border-primary"> <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-12 d-flex align-items-center">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reportType" id="billSummary" value="Bill Summary" checked>
+            <label class="form-check-label" for="billSummary">Bill Summary</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reportType" id="billWiseOutstanding" value="Bill Wise Outstanding">
+            <label class="form-check-label" for="billWiseOutstanding">Bill Wise Outstanding</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-end"> <div class="col-auto">
+          <label for="uptoDate" class="form-label">Upto Date :</label>
+        </div>
+        <div class="col-md-3">
+          <input type="date" class="form-control" id="uptoDate" value="2025-06-10">
+        </div>
+        <div class="col-auto">
+          <label for="branchName" class="form-label">Branch Name :</label>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select" id="branchName">
+            <option value="AMBALA CANTT(XACT)">AMBALA CANTT(XACT)</option>
+            <option value="DELHI(NORTH)">DELHI(NORTH)</option>
+            <option value="MUMBAI(WEST)">MUMBAI(WEST)</option>
+            <option value="KOLKATA(EAST)">KOLKATA(EAST)</option>
+            <option value="CHENNAI(SOUTH)">CHENNAI(SOUTH)</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="card-title mb-0">TOTAL BILL OUTSTANDING</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm m-0">
+          <thead>
+            <tr>
+              <th class="table-header" scope="col">Branch Name</th>
+              <th class="table-header" scope="col">Customer Code</th>
+              <th class="table-header" scope="col">No. of DWB</th>
+              <th class="table-header" scope="col">0 To 30 Days</th>
+              <th class="table-header" scope="col">31 To 60 Days</th>
+              <th class="table-header" scope="col">61 To 75 Days</th>
+              <th class="table-header" scope="col">76 To 90 Days</th>
+              <th class="table-header" scope="col">Above 90 Days</th>
+              <th class="table-header" scope="col">Tot OS Bill Amt.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>KALYAN BYPASS</td>
+              <td>1005625</td>
+              <td>7</td>
+              <td>19234.00</td>
+              <td>107060.22</td>
+              <td>0.00</td>
+              <td>29536.58</td>
+              <td>490936.64</td>
+              <td>126294.22</td>
+            </tr>
+            <tr>
+              <td>KOMPALLY</td>
+              <td>1005625</td>
+              <td>184</td>
+              <td>749382.60</td>
+              <td>1559721.55</td>
+              <td>0.00</td>
+              <td>29536.58</td>
+              <td>490936.64</td>
+              <td>2827777.37</td>
+            </tr>
+            <tr class="table-grand-total">
+              <td>Grand Total</td>
+              <td></td>
+              <td>1100</td>
+              <td>1500000.00</td>
+              <td>2500000.00</td>
+              <td>0.00</td>
+              <td>1200000.00</td>
+              <td>1000000.00</td>
+              <td>6200000.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="card-title mb-0">TOTAL UNBILL OUTSTANDING</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm m-0">
+          <thead>
+            <tr>
+              <th class="table-header" scope="col">Branch Code</th>
+              <th class="table-header" scope="col">Customer Code</th>
+              <th class="table-header" scope="col">No. of Dwb</th>
+              <th class="table-header" scope="col">Tot Unbill Amt.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LAJPAT NAGAR DELHI</td>
+              <td>1005625</td>
+              <td>2</td>
+              <td>4089.81</td>
+            </tr>
+            <tr>
+              <td>PATTNA</td>
+              <td>1005625</td>
+              <td>1</td>
+              <td>1770.00</td>
+            </tr>
+            <tr class="table-grand-total">
+              <td>Grand Total</td>
+              <td></td>
+              <td>60</td>
+              <td>550000.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

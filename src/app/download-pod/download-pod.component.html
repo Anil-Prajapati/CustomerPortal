@@ -1,1 +1,127 @@
-<p>download-pod works!</p>
+<div class="container-fluid py-4">
+  <div class="card shadow-sm mb-4 border-info">
+    <div class="card-header bg-dark text-white text-center py-2 fw-bold">
+      <h5 class="mb-0">Download POD Images</h5>
+    </div>
+    <div class="card-body bg-light-blue-gradient">
+      <form [formGroup]="podSearchForm" (ngSubmit)="showPodImages()">
+        <div class="row g-3 align-items-center justify-content-center mb-3">
+          <div class="col-md-auto">
+            <label for="panNumber" class="form-label mb-0 me-2">Pan Number :</label>
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="panNumber" formControlName="panNumber"
+                   [class.is-invalid]="podSearchForm.get('panNumber')?.invalid && podSearchForm.get('panNumber')?.touched">
+            <div *ngIf="podSearchForm.get('panNumber')?.invalid && podSearchForm.get('panNumber')?.touched" class="invalid-feedback">
+              Pan Number is required.
+            </div>
+          </div>
+
+          <div class="col-md-auto">
+            <label for="custCode" class="form-label mb-0 me-2">Cust Code :</label>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select form-select-sm" id="custCode" formControlName="custCode"
+                    [class.is-invalid]="podSearchForm.get('custCode')?.invalid && podSearchForm.get('custCode')?.touched">
+              <option *ngFor="let code of custCodes" [value]="code">{{ code }}</option>
+            </select>
+            <div *ngIf="podSearchForm.get('custCode')?.invalid && podSearchForm.get('custCode')?.touched" class="invalid-feedback">
+              Cust Code is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-center justify-content-center mb-4">
+          <div class="col-md-auto">
+            <label for="fromDate" class="form-label mb-0 me-2">From Date :</label>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control form-control-sm" id="fromDate" formControlName="fromDate"
+                   [class.is-invalid]="podSearchForm.get('fromDate')?.invalid && podSearchForm.get('fromDate')?.touched">
+            <div *ngIf="podSearchForm.get('fromDate')?.invalid && podSearchForm.get('fromDate')?.touched" class="invalid-feedback">
+              From Date is required.
+            </div>
+          </div>
+
+          <div class="col-md-auto">
+            <label for="toDate" class="form-label mb-0 me-2">To Date :</label>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control form-control-sm" id="toDate" formControlName="toDate"
+                   [class.is-invalid]="podSearchForm.get('toDate')?.invalid && podSearchForm.get('toDate')?.touched">
+            <div *ngIf="podSearchForm.get('toDate')?.invalid && podSearchForm.get('toDate')?.touched" class="invalid-feedback">
+              To Date is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button type="submit" class="btn btn-primary btn-sm px-4">Show</button>
+          <button type="button" class="btn btn-secondary btn-sm px-4" (click)="clearForm()">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-primary mt-4">
+    <div class="card-body">
+      <h6 class="card-title text-center mb-3">POD Image Data</h6>
+      <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead class="table-dark sticky-top">
+            <tr>
+              <th scope="col" class="text-center" style="width: 5%;">Select</th>
+              <th scope="col">DWB No</th>
+              <th scope="col">Booking Dt</th>
+              <th scope="col">Cust Code</th>
+              <th scope="col">Cnor Name</th>
+              <th scope="col">From City</th>
+              <th scope="col">To City</th>
+              <th scope="col">Cnee Name</th>
+              <th scope="col">Delivery Dt</th>
+              <th scope="col">POD Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="paginatedPodData.length === 0">
+              <td colspan="10" class="text-center text-muted py-3">No POD images to display. Please use the form above to search.</td>
+            </tr>
+            <tr *ngFor="let item of paginatedPodData; let i = index">
+              <td class="text-center">
+                <input class="form-check-input" type="checkbox" [id]="'select_' + i" [(ngModel)]="item.select" [ngModelOptions]="{standalone: true}">
+              </td>
+              <td>{{ item.dwbNo }}</td>
+              <td>{{ item.bookingDt }}</td>
+              <td>{{ item.custCode }}</td>
+              <td>{{ item.cnorName }}</td>
+              <td>{{ item.fromCity }}</td>
+              <td>{{ item.toCity }}</td>
+              <td>{{ item.cneeName }}</td>
+              <td>{{ item.deliveryDt || 'N/A' }}</td>
+              <td class="text-center">
+                <a href="javascript:void(0)" (click)="downloadPodImage(item.dwbNo)" class="btn btn-link btn-sm p-0">Download</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="mt-3">
+        <ul class="pagination pagination-sm justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="prevPage()">Previous</a>
+          </li>
+          <li class="page-item" *ngFor="let page of pageNumbers" [class.active]="page === currentPage">
+            <a class="page-link" href="javascript:void(0)" (click)="goToPage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <div *ngIf="totalPages > 0" class="text-center text-muted small">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+    </div>
+  </div>
+</div>

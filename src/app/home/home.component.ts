@@ -2,16 +2,31 @@ import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import { MaincontentComponent } from "../maincontent/maincontent.component";
+interface DashboardCard {
+  title: string;
+  value: number;
+}
+
+interface RecentShipment {
+  dwb: string;
+  status: string;
+  icon: string;
+  color: string;
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [CommonModule, NgChartsModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
+
+dashboardCards: DashboardCard[] = [];
+recentShipments: RecentShipment[] = [];
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     datasets: [
       {
@@ -97,11 +112,26 @@ export class HomeComponent implements OnInit {
   };
 
   public lineChartType: 'line' = 'line';
-  public isBrowser: boolean = false; 
+  public isBrowser: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
+  this.isBrowser = isPlatformBrowser(this.platformId);
+
+  this.dashboardCards = [
+    { title: "Today's Shipment", value: 1238 },
+    { title: "Yesterday's Shipment", value: 1228 },
+    { title: "Pending POD's", value: 112 },
+    { title: "Pickup Request", value: 89 }
+  ];
+
+  this.recentShipments = [
+    { dwb: 'DWB-01234', status: 'Delivered to Chennai', icon: 'bi bi-check-square-fill', color: 'text-success' },
+    { dwb: 'DWB-04567', status: 'In transit to Mumbai', icon: 'bi bi-truck', color: 'text-info' },
+    { dwb: 'DWB-09887', status: 'Failed delivery', icon: 'bi bi-x-square-fill', color: 'text-danger' },
+    { dwb: 'DWB-06543', status: 'Delivered to Delhi', icon: 'bi bi-check-square-fill', color: 'text-success' }
+  ];
+}
+
 }

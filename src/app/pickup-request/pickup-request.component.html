@@ -1,1 +1,435 @@
-<p>pickup-request works!</p>
+<div class="container-fluid py-4">
+  <div class="card shadow-sm mb-4 border-info">
+    <div class="card-body bg-light-blue-gradient">
+      <div class="row text-center mb-3">
+        <div class="col-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reportType" id="pickupRequest" value="pickupRequest"
+                   [checked]="selectedReportType === 'pickupRequest'" (change)="onRadioChange($event)">
+            <label class="form-check-label" for="pickupRequest">Pickup Request</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reportType" id="pickupRequestBulkUploading" value="pickupRequestBulkUploading"
+                   [checked]="selectedReportType === 'pickupRequestBulkUploading'" (change)="onRadioChange($event)">
+            <label class="form-check-label" for="pickupRequestBulkUploading">Pickup Request Bulk Uploading</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="reportType" id="pickupStatusReport" value="pickupStatusReport"
+                   [checked]="selectedReportType === 'pickupStatusReport'" (change)="onRadioChange($event)">
+            <label class="form-check-label" for="pickupStatusReport">Pickup Status Report</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-card card shadow-sm border-primary">
+    <div class="card-body">
+
+      <ng-container *ngIf="selectedReportType === 'pickupRequest'">
+        <h5 class="card-title mb-4 text-center">PICKUP REQUEST</h5>
+        <form [formGroup]="pickupRequestForm" (ngSubmit)="submitPickupRequest()">
+
+          <div class="mb-3">
+            <label for="destinationPincode" class="form-label fw-bold">* Enter Destination Pincode</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="destinationPincode" formControlName="destinationPincode" placeholder="Pincode"
+                     [class.is-invalid]="pickupRequestForm.get('destinationPincode')?.invalid && pickupRequestForm.get('destinationPincode')?.touched">
+              <button class="btn btn-primary" type="button">Check</button>
+              <div *ngIf="pickupRequestForm.get('destinationPincode')?.invalid && pickupRequestForm.get('destinationPincode')?.touched" class="invalid-feedback">
+                Destination Pincode is required.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h6 class="mb-3">Delivery Address</h6>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="deliveryName" class="form-label fw-bold">* Name :</label>
+              <input type="text" class="form-control" id="deliveryName" formControlName="deliveryName" placeholder="Enter Name"
+                     [class.is-invalid]="pickupRequestForm.get('deliveryName')?.invalid && pickupRequestForm.get('deliveryName')?.touched">
+              <div *ngIf="pickupRequestForm.get('deliveryName')?.invalid && pickupRequestForm.get('deliveryName')?.touched" class="invalid-feedback">
+                Name is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="deliveryPhone" class="form-label fw-bold">* Phone :</label>
+              <input type="tel" class="form-control" id="deliveryPhone" formControlName="deliveryPhone" placeholder="Enter Phone No."
+                     [class.is-invalid]="pickupRequestForm.get('deliveryPhone')?.invalid && pickupRequestForm.get('deliveryPhone')?.touched">
+              <div *ngIf="pickupRequestForm.get('deliveryPhone')?.invalid && pickupRequestForm.get('deliveryPhone')?.touched" class="invalid-feedback">
+                <span *ngIf="pickupRequestForm.get('deliveryPhone')?.errors?.['required']">Phone number is required.</span>
+                <span *ngIf="pickupRequestForm.get('deliveryPhone')?.errors?.['pattern']">Please enter a valid 10-digit phone number.</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="deliveryAddress" class="form-label fw-bold">* Address :</label>
+              <textarea class="form-control" id="deliveryAddress" formControlName="deliveryAddress" placeholder="Enter Address" rows="3"
+                        [class.is-invalid]="pickupRequestForm.get('deliveryAddress')?.invalid && pickupRequestForm.get('deliveryAddress')?.touched"></textarea>
+              <div *ngIf="pickupRequestForm.get('deliveryAddress')?.invalid && pickupRequestForm.get('deliveryAddress')?.touched" class="invalid-feedback">
+                Address is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="deliveryEmail" class="form-label fw-bold">* E-mail :</label>
+              <input type="email" class="form-control" id="deliveryEmail" formControlName="deliveryEmail" placeholder="Enter E-mail Address"
+                     [class.is-invalid]="pickupRequestForm.get('deliveryEmail')?.invalid && pickupRequestForm.get('deliveryEmail')?.touched">
+              <div *ngIf="pickupRequestForm.get('deliveryEmail')?.invalid && pickupRequestForm.get('deliveryEmail')?.touched" class="invalid-feedback">
+                <span *ngIf="pickupRequestForm.get('deliveryEmail')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="pickupRequestForm.get('deliveryEmail')?.errors?.['email']">Please enter a valid email address.</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="toPin" class="form-label fw-bold">* To pin :</label>
+              <input type="text" class="form-control" id="toPin" formControlName="toPin" placeholder="Enter To pin"
+                     [class.is-invalid]="pickupRequestForm.get('toPin')?.invalid && pickupRequestForm.get('toPin')?.touched">
+              <div *ngIf="pickupRequestForm.get('toPin')?.invalid && pickupRequestForm.get('toPin')?.touched" class="invalid-feedback">
+                To Pin is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">* Freight paid at :</label>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="freightPaidAt" id="fpBookingPoint" value="Booking Point" formControlName="freightPaidAt">
+                  <label class="form-check-label" for="fpBookingPoint">Booking Point</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="freightPaidAt" id="fpDeliveryPoint" value="Delivery Point" formControlName="freightPaidAt">
+                  <label class="form-check-label" for="fpDeliveryPoint">Delivery Point</label>
+                </div>
+                <div *ngIf="pickupRequestForm.get('freightPaidAt')?.invalid && pickupRequestForm.get('freightPaidAt')?.touched" class="text-danger small mt-1">
+                  Freight paid at is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="goodType" class="form-label fw-bold">* Good Type :</label>
+              <select class="form-select" id="goodType" formControlName="goodType"
+                      [class.is-invalid]="pickupRequestForm.get('goodType')?.invalid && pickupRequestForm.get('goodType')?.touched">
+                <option value="">Select</option>
+                <option value="ACs,Fridge,Fax,Cell Phones etc -(White Goods)">ACs,Fridge,Fax,Cell Phones etc -(White Goods)</option>
+                <option value="Electric Goods">Electric Goods</option>
+                <option value="Computers Hardware & Related Accessories, Modem/UPS etc">Computers Hardware & Related Accessories, Modem/UPS etc</option>
+                <option value="Dry Cells/Battery">Dry Cells/Battery</option>
+                <option value="Personal products-Soaps & Detergents, Toiletries, Health Care Products">Personal products-Soaps & Detergents, Toiletries, Health Care Products</option>
+                <option value="Religious Goods-Agarbatties etc, Gem Stones/Moduled Idols etc">Religious Goods-Agarbatties etc, Gem Stones/Moduled Idols etc</option>
+                <option value="Pan Masala,Chewing Tobacco,Cigrattes,Biddies">Pan Masala,Chewing Tobacco,Cigrattes,Biddies</option>
+                <option value="Plastic Goods">Plastic Goods</option>
+                <option value="Office Equipments/Furniture Items">Office Equipments/Furniture Items</option>
+                <option value="Handicraft & Gift Articles,Toys,Artificial Jewellery etc">Handicraft & Gift Articles,Toys,Artificial Jewellery etc</option>
+                <option value="Automotive Motor Parts (HCV,LCV,Cars,2 wheelers spares)">Automotive Motor Parts (HCV,LCV,Cars,2 wheelers spares)</option>
+                <option value="Garments/Textiles">Garments/Textiles</option>
+                <option value="Plant & Machinery Parts/Equipments">Plant & Machinery Parts/Equipments</option>
+                <option value="Medicine/Pharmaceutical Products">Medicine/Pharmaceutical Products</option>
+                <option value="Medical Equipment /Scientific Instruments">Medical Equipment /Scientific Instruments</option>
+                <option value="Dyes & Chemical Products">Dyes & Chemical Products</option>
+                <option value="Agricultural Products">Agricultural Products</option>
+                <option value="Mineral Products -Zinc">Mineral Products -Zinc</option>
+                <option value="Processed Food/Food Products, Confectioneries/Groceries">Processed Food/Food Products, Confectioneries/Groceries</option>
+                <option value="Metal Products - Aluminium, Steel, Copper etc">Metal Products - Aluminium, Steel, Copper etc</option>
+                <option value="Office Stationeries- CDs, Pens, Pencils & Paper products/ Computer Stationery">Office Stationeries- CDs, Pens, Pencils & Paper products/ Computer Stationery</option>
+                <option value="Leather Goods">Leather Goods</option>
+                <option value="Sanitaryware, Tiles, Door Fittings, Bathroom Fittings etc/Sanitary Hardware">Sanitaryware, Tiles, Door Fittings, Bathroom Fittings etc/Sanitary Hardware</option>
+                <option value="Luggage Items/Household Material">Luggage Items/Household Material</option>
+                <option value="Advertising/Promotional Materials -Catalogue, Brochures, Banners">Advertising/Promotional Materials -Catalogue, Brochures, Banners</option>
+                <option value="Printed Books/Management School Study Material">Printed Books/Management School Study Material</option>
+                <option value="Others">Others</option>
+                <option value="DOX-Documents/Envelopes">DOX-Documents/Envelopes</option>
+                <option value="Non-DOX - Sample etc">Non-DOX - Sample etc</option>
+              </select>
+              <div *ngIf="pickupRequestForm.get('goodType')?.invalid && pickupRequestForm.get('goodType')?.touched" class="invalid-feedback">
+                Good Type is required.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h6 class="mb-3">Booking Address</h6>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="bookingName" class="form-label fw-bold">* Name :</label>
+              <input type="text" class="form-control" id="bookingName" formControlName="bookingName" placeholder="Enter Name"
+                     [class.is-invalid]="pickupRequestForm.get('bookingName')?.invalid && pickupRequestForm.get('bookingName')?.touched">
+              <div *ngIf="pickupRequestForm.get('bookingName')?.invalid && pickupRequestForm.get('bookingName')?.touched" class="invalid-feedback">
+                Name is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="bookingPhone" class="form-label fw-bold">* Phone :</label>
+              <input type="tel" class="form-control" id="bookingPhone" formControlName="bookingPhone" placeholder="Enter Phone No."
+                     [class.is-invalid]="pickupRequestForm.get('bookingPhone')?.invalid && pickupRequestForm.get('bookingPhone')?.touched">
+              <div *ngIf="pickupRequestForm.get('bookingPhone')?.invalid && pickupRequestForm.get('bookingPhone')?.touched" class="invalid-feedback">
+                <span *ngIf="pickupRequestForm.get('bookingPhone')?.errors?.['required']">Phone number is required.</span>
+                <span *ngIf="pickupRequestForm.get('bookingPhone')?.errors?.['pattern']">Please enter a valid 10-digit phone number.</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="bookingAddress" class="form-label fw-bold">* Address :</label>
+              <textarea class="form-control" id="bookingAddress" formControlName="bookingAddress" placeholder="Enter Address" rows="3"
+                        [class.is-invalid]="pickupRequestForm.get('bookingAddress')?.invalid && pickupRequestForm.get('bookingAddress')?.touched"></textarea>
+              <div *ngIf="pickupRequestForm.get('bookingAddress')?.invalid && pickupRequestForm.get('bookingAddress')?.touched" class="invalid-feedback">
+                Address is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="bookingEmail" class="form-label fw-bold">* E-mail :</label>
+              <input type="email" class="form-control" id="bookingEmail" formControlName="bookingEmail" placeholder="Enter E-mail Address"
+                     [class.is-invalid]="pickupRequestForm.get('bookingEmail')?.invalid && pickupRequestForm.get('bookingEmail')?.touched">
+              <div *ngIf="pickupRequestForm.get('bookingEmail')?.invalid && pickupRequestForm.get('bookingEmail')?.touched" class="invalid-feedback">
+                <span *ngIf="pickupRequestForm.get('bookingEmail')?.errors?.['required']">Email is required.</span>
+                <span *ngIf="pickupRequestForm.get('bookingEmail')?.errors?.['email']">Please enter a valid email address.</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="fromPin" class="form-label fw-bold">* From pin :</label>
+              <input type="text" class="form-control" id="fromPin" formControlName="fromPin" placeholder="Enter From pin"
+                     [class.is-invalid]="pickupRequestForm.get('fromPin')?.invalid && pickupRequestForm.get('fromPin')?.touched">
+              <div *ngIf="pickupRequestForm.get('fromPin')?.invalid && pickupRequestForm.get('fromPin')?.touched" class="invalid-feedback">
+                From Pin is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="serviceType" class="form-label fw-bold">* Service Type :</label>
+              <select class="form-select" id="serviceType" formControlName="serviceType"
+                      [class.is-invalid]="pickupRequestForm.get('serviceType')?.invalid && pickupRequestForm.get('serviceType')?.touched">
+                <option value="">Select</option>
+                <option value="Surface Express Service">Surface Express Service</option>
+                <option value="Air Express Service">Air Express Service</option>
+                <option value="Air International">Air International</option>
+              </select>
+              <div *ngIf="pickupRequestForm.get('serviceType')?.invalid && pickupRequestForm.get('serviceType')?.touched" class="invalid-feedback">
+                Service Type is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="weight" class="form-label fw-bold">* Weight (kgs) :</label>
+              <input type="number" class="form-control" id="weight" formControlName="weight" placeholder="Enter Weight in kgs" step="0.01"
+                     [class.is-invalid]="pickupRequestForm.get('weight')?.invalid && pickupRequestForm.get('weight')?.touched">
+              <div *ngIf="pickupRequestForm.get('weight')?.invalid && pickupRequestForm.get('weight')?.touched" class="invalid-feedback">
+                <span *ngIf="pickupRequestForm.get('weight')?.errors?.['required']">Weight is required.</span>
+                <span *ngIf="pickupRequestForm.get('weight')?.errors?.['min']">Weight must be greater than 0.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="remark" class="form-label fw-bold">Remark :</label>
+            <textarea class="form-control" id="remark" formControlName="remark" placeholder="Add any remarks" rows="2"></textarea>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">* Requested By :</label>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="requestedBy" id="rbBookingAddress" value="Booking Address" formControlName="requestedBy">
+                  <label class="form-check-label" for="rbBookingAddress">Booking Address</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="requestedBy" id="rbDeliveryAddress" value="Delivery Address" formControlName="requestedBy">
+                  <label class="form-check-label" for="rbDeliveryAddress">Delivery Address</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="requestedBy" id="rbOther" value="OTHER" formControlName="requestedBy">
+                  <label class="form-check-label" for="rbOther">OTHER</label>
+                </div>
+                <div *ngIf="pickupRequestForm.get('requestedBy')?.invalid && pickupRequestForm.get('requestedBy')?.touched" class="text-danger small mt-1">
+                  Requested By is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ng-container *ngIf="pickupRequestForm.get('requestedBy')?.value === 'OTHER'">
+                <div class="mb-3">
+                  <label for="otherName" class="form-label fw-bold">Name :</label>
+                  <input type="text" class="form-control" id="otherName" formControlName="otherName" placeholder="Enter Name"
+                         [class.is-invalid]="pickupRequestForm.get('otherName')?.invalid && pickupRequestForm.get('otherName')?.touched">
+                  <div *ngIf="pickupRequestForm.get('otherName')?.invalid && pickupRequestForm.get('otherName')?.touched" class="invalid-feedback">
+                    Name is required for 'OTHER'.
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <ng-container *ngIf="pickupRequestForm.get('requestedBy')?.value === 'OTHER'">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="otherPhone" class="form-label fw-bold">* Phone :</label>
+                        <input type="tel" class="form-control" id="otherPhone" formControlName="otherPhone" placeholder="Enter Phone No."
+                               [class.is-invalid]="pickupRequestForm.get('otherPhone')?.invalid && pickupRequestForm.get('otherPhone')?.touched">
+                        <div *ngIf="pickupRequestForm.get('otherPhone')?.invalid && pickupRequestForm.get('otherPhone')?.touched" class="invalid-feedback">
+                            <span *ngIf="pickupRequestForm.get('otherPhone')?.errors?.['required']">Phone number is required for 'OTHER'.</span>
+                            <span *ngIf="pickupRequestForm.get('otherPhone')?.errors?.['pattern']">Please enter a valid 10-digit phone number.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="otherEmail" class="form-label fw-bold">* E-mail :</label>
+                        <input type="email" class="form-control" id="otherEmail" formControlName="otherEmail" placeholder="Enter E-mail Address"
+                               [class.is-invalid]="pickupRequestForm.get('otherEmail')?.invalid && pickupRequestForm.get('otherEmail')?.touched">
+                        <div *ngIf="pickupRequestForm.get('otherEmail')?.invalid && pickupRequestForm.get('otherEmail')?.touched" class="invalid-feedback">
+                            <span *ngIf="pickupRequestForm.get('otherEmail')?.errors?.['required']">Email is required for 'OTHER'.</span>
+                            <span *ngIf="pickupRequestForm.get('otherEmail')?.errors?.['email']">Please enter a valid email address.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12"> <div class="mb-3">
+                        <label for="otherAddress" class="form-label fw-bold">* Address :</label>
+                        <textarea class="form-control" id="otherAddress" formControlName="otherAddress" placeholder="Enter Address" rows="3"
+                                  [class.is-invalid]="pickupRequestForm.get('otherAddress')?.invalid && pickupRequestForm.get('otherAddress')?.touched"></textarea>
+                        <div *ngIf="pickupRequestForm.get('otherAddress')?.invalid && pickupRequestForm.get('otherAddress')?.touched" class="invalid-feedback">
+                            Address is required for 'OTHER'.
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="packetImage1" class="form-label fw-bold">Packet Image1 :</label>
+              <input class="form-control" type="file" id="packetImage1" (change)="onPacketImageSelected($event)"
+                     [class.is-invalid]="pickupRequestForm.get('packetImage1')?.invalid && pickupRequestForm.get('packetImage1')?.touched">
+              <div *ngIf="pickupRequestForm.get('packetImage1')?.invalid && pickupRequestForm.get('packetImage1')?.touched" class="invalid-feedback">
+                Packet Image is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="preferredPickupDate" class="form-label fw-bold">* Preferred pickup Date :</label>
+              <input type="date" class="form-control" id="preferredPickupDate" formControlName="preferredPickupDate"
+                     [class.is-invalid]="pickupRequestForm.get('preferredPickupDate')?.invalid && pickupRequestForm.get('preferredPickupDate')?.touched">
+              <div *ngIf="pickupRequestForm.get('preferredPickupDate')?.invalid && pickupRequestForm.get('preferredPickupDate')?.touched" class="invalid-feedback">
+                Preferred pickup Date is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="timeSlot" class="form-label fw-bold">* Time Slot :</label>
+              <select class="form-select" id="timeSlot" formControlName="timeSlot"
+                      [class.is-invalid]="pickupRequestForm.get('timeSlot')?.invalid && pickupRequestForm.get('timeSlot')?.touched">
+                <option value="">Select</option>
+                <option value="2 - 4 PM">2 - 4 PM</option>
+                <option value="4 - 6 PM">4 - 6 PM</option>
+              </select>
+              <div *ngIf="pickupRequestForm.get('timeSlot')?.invalid && pickupRequestForm.get('timeSlot')?.touched" class="invalid-feedback">
+                Time Slot is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+            <button type="submit" class="btn btn-primary">Submit Pickup Request</button>
+            <button type="button" class="btn btn-secondary" (click)="clearPickupRequestForm()">Clear</button>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="selectedReportType === 'pickupRequestBulkUploading'">
+        <h5 class="card-title mb-4">PICKUP REQUEST BULK UPLOADING</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card shadow-sm border-secondary mb-4" style="height: 100%;">
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">GUIDELINES</h6>
+                <p>Date Format must be in 01-APR-2019 in Excel Sheet.</p>
+                <p>Time Slot : 2 - 4 PM &nbsp; 4 - 6 PM</p>
+                <p>Service Type: Surface(21) &nbsp; Air(22) &nbsp; Air Inter(26)</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <form [formGroup]="pickupBulkUploadForm" (ngSubmit)="submitBulkUpload()">
+              <div class="mb-3">
+                <label for="goodType" class="form-label">Good Type :</label>
+                <select class="form-select" id="goodType" formControlName="goodType">
+                  <option value="">Select</option>
+                  <option value="documents">Documents</option>
+                  <option value="parcels">Parcels</option>
+                  <option value="heavy">Heavy Goods</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="selectFile" class="form-label">Select File</label>
+                <input class="form-control" type="file" id="selectFile" (change)="onFileSelected($event)"
+                       [class.is-invalid]="pickupBulkUploadForm.get('selectFile')?.invalid && pickupBulkUploadForm.get('selectFile')?.touched">
+                <div *ngIf="pickupBulkUploadForm.get('selectFile')?.invalid && pickupBulkUploadForm.get('selectFile')?.touched" class="invalid-feedback">
+                  File is required for bulk upload.
+                </div>
+              </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button type="button" class="btn btn-outline-info">Show Spread Sheet(s)</button>
+              </div>
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                <button type="button" class="btn btn-outline-secondary">Download Format</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
+                <button type="button" class="btn btn-secondary">Show Data</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedReportType === 'pickupStatusReport'">
+        <h5 class="card-title mb-4">PICKUP STATUS REPORT</h5>
+        <form [formGroup]="pickupStatusReportForm" (ngSubmit)="submitPickupStatusReport()">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="requestFromDate" class="form-label">Request From Date :</label>
+              <input type="date" class="form-control" id="requestFromDate" formControlName="requestFromDate"
+                     [class.is-invalid]="pickupStatusReportForm.get('requestFromDate')?.invalid && pickupStatusReportForm.get('requestFromDate')?.touched">
+              <div *ngIf="pickupStatusReportForm.get('requestFromDate')?.invalid && pickupStatusReportForm.get('requestFromDate')?.touched" class="invalid-feedback">
+                From Date is required.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="requestToDate" class="form-label">Request To Date :</label>
+              <input type="date" class="form-control" id="requestToDate" formControlName="requestToDate"
+                     [class.is-invalid]="pickupStatusReportForm.get('requestToDate')?.invalid && pickupStatusReportForm.get('requestToDate')?.touched">
+              <div *ngIf="pickupStatusReportForm.get('requestToDate')?.invalid && pickupStatusReportForm.get('requestToDate')?.touched" class="invalid-feedback">
+                To Date is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label me-3">Select Type :</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="selectType" id="allStatus" value="All" formControlName="selectType">
+              <label class="form-check-label" for="allStatus">All</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="selectType" id="pendingStatus" value="Pending" formControlName="selectType">
+              <label class="form-check-label" for="pendingStatus">Pending</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="selectType" id="closedStatus" value="Closed" formControlName="selectType">
+              <label class="form-check-label" for="closedStatus">Closed</label>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+            <button type="button" class="btn btn-primary" (click)="showPickupStatus()">Show</button>
+            <button type="button" class="btn btn-success" (click)="exportExcel()">Excel</button>
+            <button type="button" class="btn btn-secondary" (click)="clearPickupStatus()">Clear</button>
+          </div>
+        </form>
+      </ng-container>
+
+    </div>
+  </div>
+</div>

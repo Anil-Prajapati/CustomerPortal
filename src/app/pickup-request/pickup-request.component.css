@@ -1,0 +1,45 @@
+/* Custom CSS for PickupRequestComponent */
+
+.py-4 {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.bg-light-blue-gradient {
+  background: linear-gradient(to right, #e0f2f7, #c1e7f0); /* Light blue gradient as seen in image */
+}
+
+.content-card {
+  border-color: #007bff !important; /* Blue border for the main content card */
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+.invalid-feedback {
+  display: block; 
+}
+
+/* Specific styles to match the image's appearance */
+.form-label.fw-bold {
+  font-weight: bold;
+}
+
+
+.d-grid.gap-2.d-md-flex {
+  button {
+    margin-bottom: 0.5rem; 
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* Example to ensure input height matches */
+.form-control, .form-select {
+    height: calc(1.5em + 0.75rem + 2px); 
+}
+
+.input-group .btn {
+  height: calc(1.5em + 0.75rem + 2px); 
+}
